@@ -1,8 +1,20 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import ShimmerLoading from "./ShimmerLoading";
 
 const Homepage = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleLoading = () => {
+    setLoading(true);
+    setTimeout(() => {
+      navigate("/quiz");
+      setLoading(false);
+    }, 3000);
+  };
   return (
     <div className='container lg:w-9/12 md:w-[90%] mx-auto mt-10 flex md:flex-row flex-col-reverse justify-between items-center space-y-24'>
+      {loading && <ShimmerLoading />}
       <div className='md:w-1/2 w-full space-y-7 text-start'>
         <h1 className='md:text-3xl text-2xl font-krona  leading-normal'>
           Learn new concepts for each question
@@ -12,7 +24,10 @@ const Homepage = () => {
         </p>
         <div className='flex flex-col md:flex-row gap-8 items-start md:items-center md:space-x-5'>
           <Link to='/quiz'>
-            <button className='flex bg-customGreen px-6  py-2 text-white rounded shadow-sm'>
+            <button
+              onClick={handleLoading}
+              className='flex bg-customGreen px-6  py-2 text-white rounded shadow-sm'
+            >
               Start Quiz
             </button>
           </Link>
